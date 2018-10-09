@@ -1,0 +1,179 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<form [formGroup]="serverConfigForm" (ngSubmit)="onSubmit(serverConfigForm)">
+				<h4>{{getTitle()}}</h4>
+				<div formGroupName="database_config">
+					<h6>Source Database configuration</h6>
+					<div class="row">
+						 <div class="col-sm-3">
+							<div class="form-group">
+								<label>Host</label>
+								<input type="text" class="form-control form-control-sm" placeholder="127.0.0.1" formControlName="mysql_source_host" />
+								<span class="text-danger small" *ngIf="DC.controls['mysql_source_host'].invalid && (DC.controls['mysql_source_host'].dirty || DC.controls['mysql_source_host'].touched) && DC.controls['mysql_source_host'].errors.required">
+										This field is required
+								  </span>
+								
+							</div>
+						  </div>
+						<div class="col-sm-2">
+							<div class="form-group">
+								<label>Username</label>
+									<input type="text" class="form-control form-control-sm" placeholder="root" formControlName="mysql_source_username"/>
+									<span class="text-danger small" *ngIf="DC.controls['mysql_source_username'].invalid && (DC.controls['mysql_source_username'].dirty || DC.controls['mysql_source_username'].touched) && DC.controls['mysql_source_username'].errors.required">
+											This field is required
+									  </span>
+								</div>
+						</div>
+						  <div class="col-sm-2">
+							<div class="form-group">
+								<label>Password</label>
+								<input type="text" class="form-control form-control-sm" placeholder="password" formControlName="mysql_source_password"/>
+							</div>
+						  </div>
+						  <div class="col-sm-2">
+							<div class="form-group">
+								<label>Port</label>
+								<input type="text" class="form-control form-control-sm" placeholder="3306" formControlName="mysql_source_port"/>
+								<span class="text-danger small" *ngIf="DC.controls['mysql_source_port'].invalid && (DC.controls['mysql_source_port'].dirty || DC.controls['mysql_source_port'].touched) && DC.controls['mysql_source_port'].errors.required">
+										This field is required
+								  </span>
+							</div>
+						  </div>
+						  <div class="col-sm-3">
+							<div class="form-group">
+								<label>Database Name</label>
+								<input type="text" class="form-control form-control-sm" placeholder="database name" formControlName="mysql_source_database"/>
+								<span class="text-danger small" *ngIf="DC.controls['mysql_source_database'].invalid && (DC.controls['mysql_source_database'].dirty || DC.controls['mysql_source_database'].touched) && DC.controls['mysql_source_database'].errors.required">
+										This field is required
+								  </span>
+							</div>
+						</div>
+					</div>
+					<h6>Destination Database Configuration</h6>
+					<div class="row">
+						<div class="col-sm-3">
+						   <div class="form-group">
+							   <label>Host</label>
+							   <input type="text" class="form-control form-control-sm" placeholder="127.0.0.1" formControlName="mysql_destination_host"/>
+							   <span class="text-danger small" *ngIf="DC.controls['mysql_destination_host'].invalid && (DC.controls['mysql_destination_host'].dirty || DC.controls['mysql_destination_host'].touched) && DC.controls['mysql_destination_host'].errors.required">
+									This field is required
+							  </span>
+						   </div>
+						 </div>
+					   <div class="col-sm-2">
+						   <div class="form-group">
+							   <label>Username</label>
+								   <input type="text" class="form-control form-control-sm" placeholder="root" formControlName="mysql_destination_username"/>
+								   <span class="text-danger small" *ngIf="DC.controls['mysql_destination_username'].invalid && (DC.controls['mysql_destination_username'].dirty || DC.controls['mysql_destination_username'].touched) && DC.controls['mysql_destination_username'].errors.required">
+										This field is required
+								  </span>
+							   </div>
+					   </div>
+						 <div class="col-sm-2">
+						   <div class="form-group">
+							   <label>Password</label>
+							   <input type="text" class="form-control form-control-sm" placeholder="password" formControlName="mysql_destination_password"/>
+						   </div>
+						 </div>
+						 <div class="col-sm-2">
+						   <div class="form-group">
+							   <label>Port</label>
+							   <input type="text" class="form-control form-control-sm" placeholder="3307" formControlName="mysql_destination_port"/>
+							   <span class="text-danger small" *ngIf="DC.controls['mysql_destination_port'].invalid && (DC.controls['mysql_destination_port'].dirty || DC.controls['mysql_destination_port'].touched) && DC.controls['mysql_destination_port'].errors.required">
+									This field is required
+							  </span>
+						   </div>
+						 </div>
+						 <div class="col-sm-3">
+						   <div class="form-group">
+							   <label>Database Name</label>
+							   <input type="text" class="form-control form-control-sm" placeholder="database name" formControlName="mysql_destination_database"/>
+							   <span class="text-danger small" *ngIf="DC.controls['mysql_destination_database'].invalid && (DC.controls['mysql_destination_database'].dirty || DC.controls['mysql_destination_database'].touched) && DC.controls['mysql_destination_database'].errors.required">
+									This field is required
+							  </span>
+						   </div>
+					   </div>
+				   </div>
+				</div>
+				<div class="clearfix">
+					<div class="float-left">
+						<h4>Table Configuration</h4>
+					</div>
+					<div class="float-right">
+						<button class="btn btn-dark btn-sm" (click)="addTableConfig()">Add another table </button>
+					</div>
+				</div>
+				<div formArrayName="tableConfig">
+					<div class="sfy-fg" *ngFor="let group of getTcFormArray().controls; let i=index" [formGroup]="group">
+						
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Source table</label>
+									<input type="text" class="form-control form-control-sm"  placeholder="vtiger_table_name" formControlName="source_table" />
+								   <span class="text-danger small" *ngIf="group.controls['source_table'].invalid && (group.controls['source_table'].dirty || group.controls['source_table'].touched) && group.controls['source_table'].errors.required">
+										This field is required
+								  </span>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Destination table</label>
+									<input type="text" class="form-control form-control-sm" placeholder="vtiger_table_name" aria-describedby="checkiftableexists" formControlName="destination_table">
+								   <span class="text-danger small" *ngIf="group.controls['destination_table'].invalid && (group.controls['destination_table'].dirty || group.controls['destination_table'].touched) && group.controls['destination_table'].errors.required">
+										This field is required
+								  </span>
+									<small id="checkiftableexists" class="text-muted float-right">
+										<label  class="form-check-label"> <input class="form-check-input " type="checkbox" value="yes">  Create table if not exists</label>
+									</small>
+									
+								</div>
+							</div>
+							
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Related tables</label>
+									<input type="text" class="form-control form-control-sm" placeholder="vtiger_table_name1,vtiger_table_name2,..." formControlName="related_tables">
+								   <span class="text-danger small" *ngIf="group.controls['related_tables'].invalid && (group.controls['related_tables'].dirty || group.controls['related_tables'].touched) && group.controls['related_tables'].errors.required">
+										This field is required
+								  </span>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Condition</label>
+									<input type="text" class="form-control form-control-sm" placeholder="id>1 and created_date > 2017-07-14" formControlName="condition">
+								   <span class="text-danger small" *ngIf="group.controls['condition'].invalid && (group.controls['condition'].dirty || group.controls['condition'].touched) && group.controls['condition'].errors.required">
+										This field is required
+								  </span>
+								</div>
+							</div>
+						</div>
+						
+						<div *ngIf="i>0" class="clearfix">
+							<div class="float-right">
+								<button class="btn btn-warning btn-sm" (click)="delTableConfig(i)">DELETE</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+						<div class="col-sm-4">
+							<button type="submit" [disabled]="serverConfigForm.invalid" class="btn btn-block btn-info">Save</button>
+						</div>
+						<div class="col-sm-4">
+							<button type="submit" [disabled]="serverConfigForm.invalid" class="btn btn-block btn-success">Start Archive</button>
+						</div>
+						<div class="col-sm-4">
+							<button type="submit" class="btn btn-block btn-danger">Cancel</button>
+						</div>
+				</div>
+				<br>
+			</form>
+		</div>
+	</div>
+	</div>
